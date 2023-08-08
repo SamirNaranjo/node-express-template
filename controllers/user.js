@@ -70,10 +70,19 @@ const patchUser = (req, res = response) => {
     });
 }
 
-const deleteUser = (req, res = response) => {
+const deleteUser = async (req, res = response) => {
+
+    const { id } = req.params;
+
+    //Borrado Fisico de la bbdd
+    // const usuario = await Usuario.findbyIdAndDelete(id);
+    
+    
+    // Se elimina el usuario por state y no directamente de la bbdd
+    const usuario = await Usuario.findByIdAndUpdate(id, { state: false});
 
     res.json({
-        msg: 'Delete Api -- Controller'
+        usuario
     });
 }
 
