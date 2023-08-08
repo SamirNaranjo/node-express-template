@@ -4,6 +4,7 @@ const bcryptjs = require('bcryptjs');
 
 const Usuario = require('../models/usuario');
 
+
 const getUser = (req, res = response) => {
 
     res.json({
@@ -15,14 +16,6 @@ const postUser = async(req, res = response) => {
 
     const { name, email, password, role} = req.body;
     const usuario = new Usuario({name, email, password, role});
-
-    // Verificar si el correo existe
-    const existEmail = await Usuario.findOne({ email });
-    if ( existEmail ) {
-        return res.status(400).json({
-            msg: 'El Email ya existe'
-        })
-    }
 
 
     // encriptacion del password 
@@ -36,11 +29,22 @@ const postUser = async(req, res = response) => {
     });
 }
 
-const putUser = (req, res = response) => {
+const putUser = async (req, res = response) => {
 
-    res.json({
-        msg: 'Put Api -- Controller'
-    });
+    const { id } =  req.params;
+    const { _id, password, google, email, ...resto} = req.body;
+
+    // TODO validar contra bbdd
+
+    if ( password ) {
+        const salt = bcryptjs.genSaltSync();
+        resto.password = bcryptjs.hashSync(password, salt);
+    }
+
+    const usuario =  await Usuario.findByIdAndUpdate( id, resto );
+
+
+    res.json(usuario);
 }
 
 const patchUser = (req, res = response) => {
