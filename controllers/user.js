@@ -63,12 +63,16 @@ const putUser = async (req, res = response) => {
     res.json(usuario);
 }
 
+
+
 const patchUser = (req, res = response) => {
 
     res.json({
         msg: 'Patch Api -- Controller'
     });
 }
+
+
 
 const deleteUser = async (req, res = response) => {
 
@@ -81,8 +85,10 @@ const deleteUser = async (req, res = response) => {
     // Se elimina el usuario por state y no directamente de la bbdd
     const usuario = await Usuario.findByIdAndUpdate(id, { state: false});
 
+
     res.json({
-        usuario
+        usuario,
+
     });
 }
 
