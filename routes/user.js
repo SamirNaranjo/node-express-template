@@ -3,13 +3,18 @@ const { check } = require('express-validator');
 
 
 const { getUser, postUser, putUser, patchUser, deleteUser } = require('../controllers/user');
-const { validarCampos } = require('../middlewares/validar-campos');
-const { validarJWT } = require('../middlewares/validar-jwt');
+
+const {
+    validarCampos,
+    validarJWT,
+    esAdminRole,
+    tieneRole
+} = require('../middlewares')
+
 
 const { esRoleValido, 
         emailExiste, 
         existeUsuarioPorId } = require('../helpers/db-validators');
-const { esAdminRole, tieneRole } = require('../middlewares/validar-roles');
 
 
 
