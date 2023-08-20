@@ -1,5 +1,5 @@
 const { response } = require("express");
-const { Usuario } = require("../models");
+const { Usuario, Categoria, Producto } = require("../models");
 const { ObjectId } = require('mongoose').Types;
 
 
@@ -34,6 +34,51 @@ const buscarUsuarios = async (termino='', res=response) => {
 
 }
 
+
+const buscarCategorias = async (termino='', res=response) => {
+
+    const esMongoId = ObjectId.isValid(termino);
+
+    if (esMongoId) {
+        const categoria = await Categoria.findById(termino);
+        return res.json({
+            results: ( categoria ) ? [categoria] : []
+        });
+    }
+
+    const regex = new RegExp( termino, 'i' );
+
+    const categorias = await Categoria.find({ name: regex, state: true});
+
+    res.json({
+        results: categorias
+    })
+}
+
+const buscarProductos = async (termino='', res=response) => {
+
+    const esMongoId = ObjectId.isValid(termino);
+
+    if (esMongoId) {
+        const producto = await Producto.findById(termino)
+                                .populate('categoria', 'name');
+        return res.json({
+            results: ( producto ) ? [producto] : []
+        });
+    }
+
+    const regex = new RegExp( termino, 'i' );
+
+    const productos = await Producto.find({name: regex, state: true})
+                                .populate('categoria', 'name');
+
+    res.json({
+        results: productos
+    })
+
+}
+
+
 const buscar = async (req, res=response) =>{
 
     const { coleccion, termino } = req.params;
@@ -51,10 +96,10 @@ const buscar = async (req, res=response) =>{
             buscarUsuarios(termino, res);
         break;
         case 'categorias':
-        
+            buscarCategorias(termino, res);
         break;
         case 'productos':
-
+            buscarProductos(termino, res);
         break;
 
         default: 
