@@ -1,41 +1,61 @@
-const path = require('path');
-const { response } = require("express")
-const { v4: uuidv4 } = require('uuid')
+const { response } = require("express");
+const { subirArchivo } = require("../helpers/subir-archivo");
+const { Usuario, Producto } = require("../models");
 
 
-const cargarArchivo = (req, res=response) => {
+const cargarArchivo = async (req, res=response) => {
 
-    if (!req.files || Object.keys(req.files).length === 0) {
-        res.status(400).json({msg: ' No hay archivos para subir'});
-        return;
+    try {
+
+        const nombre = await subirArchivo(req.files);
+        res.json({nombre});
+
+    } catch (msg) {
+        res.status(400).json({msg});
+    }
+}
+
+const actualizarImagen = async (req, res=response) => {
+    
+    const {id , coleccion } = req.params;
+
+    let modelo;
+
+    switch (coleccion) {
+        case 'users':
+            modelo = await Usuario.findById(id);
+            if( !modelo ){
+                return res.status(400).json({
+                    msg: `No existe un usuario con el id ${ id }`
+                });
+            }    
+        break;
+
+        case 'productos':
+            modelo =  await Producto.findById(id);
+            if( !modelo ){
+                return res.status(400).json({
+                    msg: `No existe el producto con el id ${ id }`
+                });
+            }
+        break;
+
+        default:
+            return res.status(500).json({ msg: 'No se encuentra validado'});
     }
 
-    const { archivo } = req.files;
-    const nombreCortado = archivo.namesplit('.');
-    const extension = nombreCortado [ nombreCortado - 1 ];
+    const nombre = await subirArchivo ( req.files, undefined , coleccion);
+    modelo.img = nombre;
+    //console.log(req.files);
+    await modelo.save();
 
-    // Validar extensiones
 
-    const extensionesValidas = [ 'png','jpg','jpeg','gif'];
-    if ( !extensionesValidas.includes(extension) ) {
-        return res.status(400).json({
-            msg: `La extension ${ extension } no es permitida, ${ extensionesValidas}`
-        });
-    }
+    res.json(modelo);
 
-    const nombreTemp = uuidv4() + '.' + extension;
-    const uploadPath = path.join(__dirname, '../uploads/', nombreTemp);
-
-    archivo.mv (uploadPath, (err) =>{
-        if (err) {
-            return res.status(500).json ({err});
-        }
-
-        res.json({ msg: 'File uploaded to ' + uploadPath });
-    });
 
 }
 
 module.exports = {
-    cargarArchivo
+    cargarArchivo,
+    actualizarImagen
 }
