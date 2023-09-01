@@ -1,0 +1,188 @@
+body, h1, h2, h3, p, ul, li {
+    margin: 0;
+    padding: 0;
+}
+
+/* Estilos generales */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f7f7f7;
+    color: #333;
+}
+
+header {
+    background-color: #fff;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+nav li {
+    margin: 0 15px;
+}
+
+nav a {
+    color: #0074d9; /* Cambia el color del enlace a un tono brillante */
+    text-decoration: none;
+    transition: color 0.3s; /* Agrega una transición suave al color */
+}
+
+nav a:hover {
+    color: #00aaff; /* Cambia el color al pasar el cursor sobre el enlace */
+    text-decoration: underline;
+}
+
+section {
+    padding: 30px 0;
+    background-color: #fff;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.productos-destacados, .ofertas {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
+.producto, .oferta {
+    flex: 1;
+    padding: 20px;
+    margin: 10px;
+    text-align: center;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+}
+
+.producto img, .oferta img {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+}
+
+.boton-comprar {
+    display: inline-block;
+    padding: 8px 15px;
+    background-color: #ff6600;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.boton-comprar:hover {
+    background-color: #e65100;
+}
+
+footer {
+    text-align: center;
+    padding: 10px 0;
+    background-color: #333;
+    color: #fff;
+}
+
+/* Cambia el diseño de los contenedores de productos y ofertas */
+.productos-destacados, .ofertas {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.producto, .oferta {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* Cambia el estilo de la imagen del producto y oferta */
+.producto img, .oferta img {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 15px;
+}
+
+/* Cambia el estilo del precio y el botón de comprar */
+.producto p, .oferta p {
+    font-weight: bold;
+    color: #333;
+    margin: 10px 0;
+}
+
+/* Cambia el estilo del pie de página */
+footer {
+    background-color: #222;
+    color: #bbb;
+    text-align: center;
+    padding: 15px 0;
+}
+
+.productos {
+    display: flex;
+    flex-wrap: wrap; /* Permitir que los productos se envuelvan en varias filas */
+    justify-content: space-between; /* Espacio equitativo entre los productos */
+}
+
+.producto {
+    width: calc(33.33% - 20px); /* Ancho de cada producto (3 productos en una fila) */
+    margin-bottom: 20px; /* Espacio inferior entre los productos */
+    padding: 15px; /* Espacio interno del producto */
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.producto img {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+}
+
+.producto h2 {
+    text-align: center; /* Centrar el texto */
+    margin-top: 30px; /* Agregar separación superior */
+    margin-bottom: 30px; /* Agregar separación inferior */
+}
+
+@media (max-width: 768px) {
+    .productos {
+        display: block; /* Cambia a bloque para una disposición vertical en pantallas pequeñas */
+    }
+
+    .producto {
+        width: 100%; /* Ocupa todo el ancho disponible en pantallas pequeñas */
+    }
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    margin-right: 20px; /* Espacio entre el logotipo y los botones */
+}
+
+.logo-letra {
+    font-size: 24px; /* Tamaño de la letra del logotipo */
+    font-weight: bold;
+    color: white; /* Color del logotipo */
+    margin-right: 10px; /* Espacio entre la letra y los botones */
+}
+
+.py-3 {
+    padding-top: 1rem!important;
+    padding-bottom: 1rem!important;
+}
+.justify-content-center {
+    justify-content: center!important;
+}
+.d-flex {
+    display: flex!important;
+}
